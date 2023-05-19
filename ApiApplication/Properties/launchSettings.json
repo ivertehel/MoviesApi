@@ -8,11 +8,10 @@
     "ApiApplication": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "showtime",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7629;http://localhost:7628"
+      "applicationUrl": "https://localhost:7443;http://localhost:7172"
     },
     "Docker": {
       "commandName": "Docker",

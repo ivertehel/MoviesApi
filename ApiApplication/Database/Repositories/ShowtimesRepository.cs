@@ -33,6 +33,15 @@ namespace ApiApplication.Database.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id, cancel);
         }
 
+        public async Task<ShowtimeEntity> GetWithTicketsAndMovieByIdAsync(int id, CancellationToken cancel)
+        {
+            return await _context.Showtimes
+                .Include(x => x.Movie)
+                .Include(x => x.Tickets)
+                .ThenInclude(x => x.Seats)
+                .FirstOrDefaultAsync(x => x.Id == id, cancel);
+        }
+
         public async Task<IEnumerable<ShowtimeEntity>> GetAllAsync(Expression<Func<ShowtimeEntity, bool>> filter, CancellationToken cancel)
         {
             if (filter == null)

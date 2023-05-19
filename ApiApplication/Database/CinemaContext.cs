@@ -14,6 +14,8 @@ namespace ApiApplication.Database
         public DbSet<ShowtimeEntity> Showtimes { get; set; }
         public DbSet<MovieEntity> Movies { get; set; }
         public DbSet<TicketEntity> Tickets { get; set; }
+        public DbSet<SeatEntity> Seats { get; set; }
+        public DbSet<ReservationEntity> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,7 @@ namespace ApiApplication.Database
                 build.Property(entry => entry.Id).ValueGeneratedOnAdd();
                 build.HasOne(entry => entry.Movie).WithMany(entry => entry.Showtimes);
                 build.HasMany(entry => entry.Tickets).WithOne(entry => entry.Showtime).HasForeignKey(entry => entry.ShowtimeId);
+                build.HasMany(entry => entry.Reservations).WithOne(entry => entry.Showtime).HasForeignKey(entry => entry.ShowtimeId);
             });
 
             modelBuilder.Entity<MovieEntity>(build =>
@@ -48,6 +51,12 @@ namespace ApiApplication.Database
             {
                 build.HasKey(entry => entry.Id);
                 build.Property(entry => entry.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<ReservationEntity>(build =>
+            {
+                build.HasKey(entry => entry.Id);
+                build.HasKey(entry => new { entry.Id, entry.ShowtimeId, entry.SeatNumber, entry.Row });
             });
         }
     }

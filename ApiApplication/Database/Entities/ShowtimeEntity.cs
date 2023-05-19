@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiApplication.Database.Entities
 {
@@ -11,5 +10,6 @@ namespace ApiApplication.Database.Entities
         public DateTime SessionDate { get; set; }
         public int AuditoriumId { get; set; }
         public ICollection<TicketEntity> Tickets { get; set; }
+        public ICollection<ReservationEntity> Reservations { get; set; }
     }
 }

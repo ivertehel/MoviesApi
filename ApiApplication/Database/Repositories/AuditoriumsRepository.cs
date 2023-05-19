@@ -1,8 +1,8 @@
 ﻿using ApiApplication.Database.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using System.Threading;
 using ApiApplication.Database.Repositories.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ApiApplication.Database.Repositories
 {
@@ -13,6 +13,13 @@ namespace ApiApplication.Database.Repositories
         public AuditoriumsRepository(CinemaContext context)
         {
             _context = context;
+        }
+
+        public async Task<int> CreateAuditoriumAsync(AuditoriumEntity auditoriumEntity, CancellationToken cancellationToken)
+        {
+            var auditorium = await _context.Auditoriums.AddAsync(auditoriumEntity, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return auditorium.Entity.Id;
         }
 
         public async Task<AuditoriumEntity> GetAsync(int auditoriumId, CancellationToken cancel)
